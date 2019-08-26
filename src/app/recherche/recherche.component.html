@@ -1,0 +1,148 @@
+
+ <div class="container">
+    <h2>Creer une Recherche</h2>
+	<form class="form-group" [formGroup]="this.rechercheService.form" (ngSubmit)="onSubmit()">
+        <input type="hidden" formControlName="$key">
+		<div class="form-row">
+			<div class="form-group col-md-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="dateContact">Date Contact</span>
+                    </div>
+                    <input type="text"  class="form-control" id="dateContact" formControlName="dateContact"
+                        bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-default' }"/>
+                </div>
+			</div>
+	    	<div class="form-group col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="poste">Poste</span>
+                    </div>
+                    <input type="text" class="form-control" id="poste" formControlName="poste" placeholder="Poste"/>
+                </div>
+			</div>
+			<div class="form-group col-md-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="statut">Statut</span>
+                    </div>
+                    <select class="form-control" id="statut" formControlName="statut" >
+	   				    <option [value]="statut" *ngFor="let statut of this.rechercheService.listeStatutsRecherche">{{statut}}</option>
+	    		    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+			<div class="form-group col-md-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="assignationORP">Assignation ORP</span>
+                    </div>
+                    <select class="form-control" id="assignationORP" formControlName="assignationORP">
+	   				    <option [value]="bool" *ngFor="let bool of this.rechercheService.assignationORP">{{bool}}</option>
+	    		    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="tauxActivite">Taux d'activité</span>
+                    </div>
+                    <select class="form-control" id="tauxActivite" formControlName="tauxActivite">
+	   				    <option [value]="tx" *ngFor="let tx of this.rechercheService.tauxActivite">{{tx}}</option>
+	    		    </select>
+                </div>
+            </div>
+	   	    <div class="form-group col-md-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="approcheMedia">Approche Media</span>
+                    </div>
+                     <select class="form-control" id="approcheMedia" formControlName="approcheMedia">
+	   				    <option *ngFor="let media of this.rechercheService.approcheMedia" [value]="media" >{{media}}</option>
+	    		</select>
+                </div>
+            </div>
+        </div>
+        <h3>Entreprise</h3>
+	  	<div class="form-row">
+	   	    <div class="form-group col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="entreprise">Service</span>
+                    </div>
+                     <input type="text" class="form-control" id="entreprise" formControlName="entreprise" placeholder="Fournisseur de service"/>
+                </div>
+            </div>
+             <div class="form-group col-md-6">
+	   			<div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="client">Client</span>
+                    </div>
+                    <input type="text" class="form-control" id="client" formControlName="client" placeholder="Client"/>
+                </div>
+	  		</div>
+	  	</div>
+
+		<h3>Contact</h3>
+	  	<div class="form-row">
+	   		<div class="form-group col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="contactNom">Nom</span>
+                    </div>
+                    <input type="text" class="form-control" id="contactNom" formControlName="contactNom" placeholder="Nom"/>
+                </div>
+	  		</div>
+	  		<div class="form-group col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="contactPrenom">Nom</span>
+                    </div>
+                    <input type="text" class="form-control" id="contactPrenom" formControlName="contactPrenom" placeholder="Prenom"/>
+                </div>
+	  		</div>
+	  	</div>
+	  	<div class="form-row">
+                
+	   		<div class="form-group col-md-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="contactTelephone">Telephone</span>
+                    </div>
+                    <input type="text" class="form-control" id="contactTelephone" formControlName="contactTelephone" placeholder="0000 0 00 00 00"/>
+                </div>	
+	  		</div>
+	  		<div class="form-group col-md-8">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="contactEmail">Email</span>
+                    </div>
+                    <input type="text" class="form-control" id="contactEmail" formControlName="contactEmail" placeholder="xxx@yyy.zzz"/>
+                </div>
+            </div>
+		</div>
+	  	<div class="form-row">
+	  		<div class="form-group col-md-2">
+				<button type="submit" class="btn btn-success" [disabled]="this.rechercheService.form.invalid">Submit</button>
+			</div>
+			<div class="form-group col-md-2">
+				<button class="btn btn-primary" (click)="this.rechercheService.resetForm()" [disabled]="!this.rechercheService.keyIdIsNull()">Reset</button>
+            </div>
+            <div class="form-group col-md-2">
+                <!-- <button class="btn btn-primary" (click)="this.rechercheService.resetForm()" >Back</button> -->
+                <button class="btn btn-secondary" (click)="onBack()">Back</button> 
+			</div>
+		</div>
+    </form>
+    <div class="alert alert-info" *ngIf="showSuccessMessage">
+            Submitted successfully !!!
+    </div>
+</div>
+{{ this.rechercheService.keyIdIsNull() }}
+
+{{ this.rechercheService.form.value | json }}
+<br>
+Submitted = {{ submitted }}
+<br>
+invalid ? = {{ formControls.invalid  }}

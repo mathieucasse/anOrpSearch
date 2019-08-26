@@ -1,0 +1,29 @@
+<h2>Vos Recherches</h2>
+<table class="table table-hover">
+	<thead class="thead-dark">
+		<tr>
+			<th scope="col">Date</th>
+			<th scope="col">Poste</th>
+			<th scope="col">Entreprise</th>
+			<th scope="col">Client</th>
+			<th scope="col">Contact</th>
+			<th scope="col">Tel</th>
+			<th scope="col">Statut</th>
+			<th scope="col">edit</th>
+			<th scope="col">delete</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let recherche of rechercheArray">
+			<td> {{ recherche.dateContact }} </td>
+			<td> {{ recherche.poste }} </td>
+			<td> {{ recherche.entreprise }} </td>
+			<td> {{ recherche.client }} </td>
+			<td> {{ recherche.contactPrenom }} {{ recherche.contactNom }} </td>
+			<td> {{ recherche.contactTelephone }} </td>
+			<td> {{ recherche.statut }} </td>
+			<td><a class="btn btn-warning btn-sm" (click)="onEdit(recherche)">Edit</a></td>  
+			<td><a class="btn btn-danger btn-sm" (click)="onDelete(recherche.$key)">Delete</a></td>
+		</tr>
+	</tbody>
+</table>
