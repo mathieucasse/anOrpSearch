@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # AnOrpSearch
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.1.
@@ -26,6 +25,24 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-=======
-# anOrpSearch
->>>>>>> branch 'master' of https://github.com/mathieucasse/anOrpSearch
+
+## Project cli commands
+
+- ng new orp-search --style=scss --skip-tests=true
+- cd orp-search
+- ng g c auth/signup
+- ng g c auth/signin
+- ng g c recherche-list
+- ng g c recherche-list/single-recherche
+- ng g c recherche-list/recherche-form
+- ng g c header
+- ng g s shared/auth
+- ng g s shared/auth-guard
+- ng g s shared/recherches
+- npm install bootstrap --save
+- npm install firebase --save
+- npm install angularfire2 --save
+- ng add ngx-bootstrap
+- ng add jquery
+- npm i popper.js --save
+

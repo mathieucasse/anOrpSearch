@@ -19,9 +19,14 @@ export class RechercheComponent implements OnInit {
   ngOnInit() {
   }
 
+  onBack() {
+    this.rechercheService.resetForm();
+		this.router.navigate(['/recherches']);
+  }
+  
   onSubmit() {
     this.submitted = true;
-    this.logSubmit();
+    // this.logSubmit();
     if (this.rechercheService.form.valid) {
       if (this.rechercheService.form.get('$key').value == null) {
         this.rechercheService.insertRecherche(this.rechercheService.form.value);
@@ -52,9 +57,4 @@ export class RechercheComponent implements OnInit {
     console.log('Form Value = ' );
     console.log(this.rechercheService.form.value);
   }
-
-  onBack() {
-    this.rechercheService.resetForm();
-		this.router.navigate(['/recherches']);
-	}
 }
