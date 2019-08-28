@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
   templateUrl: './recherche-list.component.html',
   styleUrls: ['./recherche-list.component.css']
 })
-export class RechercheListComponent implements OnInit {
+export class RechercheListComponent implements OnInit, OnDestroy {
 
   rechercheArray = [];
   showDeleteMessage: boolean;
@@ -22,23 +22,14 @@ export class RechercheListComponent implements OnInit {
 
   ngOnInit() {
     console.log('>>>>RechercheListComponent.ngOnInit');
-    
+
     this.recherchesSubscription = this.rechercheService.recherchesSubject.subscribe(recherches => {
-         this.recherches = recherches.map(item => {
-            return this.rechercheService.fromBoot(item);
-          });
+         this.recherches = recherches;
     });
-            
-    console.log('calling this.rechercheService.getAllRecherches();');
-	  this.rechercheService.getAllRecherches();
-	  this.rechercheService.emitRecherches();
-    // this.rechercheService.getAllRecherches().subscribe(list => {
-    //   this.rechercheArray = list.map(item => {
-    //     return this.rechercheService.fromBoot(item);
-    //   });
-    // });
-    // console.log('======' + this.rechercheArray);
-    // console.log(this.rechercheService.getAllRecherches());
+
+    this.rechercheService.getAllRecherches();
+    this.rechercheService.emitRecherches();
+
     this.rechercheService.initStaticLists();
   }
 

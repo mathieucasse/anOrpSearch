@@ -19,17 +19,12 @@ export class RechercheService {
               private datepipe: DatePipe,
               private httpClient: HttpClient) { }
 
-  // rechercheList: AngularFireList<any>;
-  // rechercheArray: [] = this.getAllRecherches().subscribe(list => {
-  //     this.rechercheArray = list.map(item => {
-  //       return this.fromBoot(item);
-  //     });
-  // //   });
-  //   console.log('======' + this.rechercheArray);
-  //   console.log(this.rechercheService.getAllRecherches());
   recherches: any[] = [];
   recherchesSubject = new Subject<any[]>();
+  
   emitRecherches() {
+    console.log('Emit Recherches ');
+    console.log(this.recherches);
 		this.recherchesSubject.next(this.recherches);
 	}
 
@@ -42,11 +37,11 @@ export class RechercheService {
 
   form = this.formBuider.group(this.initForm());
 
-  
-
   getAllRecherches() {
     return this.httpClient.get(this.baseUrl + 'recherches').subscribe((res: any[]) => {
-          this.recherches = res;
+          console.log('getAllRecherche....');
+          console.log(res);
+          this.recherches = res.map(this.fromBoot);
           this.emitRecherches();
         },
         error => this.handleError(error));
@@ -237,7 +232,7 @@ export class RechercheService {
     fromBoot(recherche) {
       return {
         $key: recherche.id,
-        dateContact: this.datepipe.transform(new Date(recherche.dateContact), 'yyyy-MM-dd'),
+        dateContact: recherche.dateContact,
         poste: recherche.poste,
         statut: recherche.statut,
 
