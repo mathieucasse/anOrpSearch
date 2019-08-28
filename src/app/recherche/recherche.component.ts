@@ -11,7 +11,13 @@ export class RechercheComponent  {
 
   submitted: boolean;
   showSuccessMessage: boolean;
-  formControls = this.rechercheService.form.controls;
+  rechercheForm = this.rechercheService.form;
+  formControls = this.rechercheForm.controls;
+  allStatutsRecherche = this.rechercheService.allStatutsRecherche;
+  allAssignationORP = this.rechercheService.allAssignationORP;
+  allTauxActivite = this.rechercheService.allTauxActivite;
+  allApprocheMedia = this.rechercheService.allApprocheMedia;
+
 
   constructor(private rechercheService: RechercheService,
               private router: Router) { }
@@ -22,10 +28,13 @@ export class RechercheComponent  {
 		  this.router.navigate(['/recherches']);
   }
 
-  // onTest() {
-  //   this.allAssignationORP = this.rechercheService.getAllAssignationOrp();
-	// 	// this.router.navigate(['/recherches']);
-  // }
+  resetForm() {
+    this.rechercheService.resetForm();
+  }
+
+  keyIdIsNull() {
+    return this.rechercheService.keyIdIsNull();
+  }
 
   onSubmit() {
     this.submitted = true;

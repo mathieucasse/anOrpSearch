@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-
+  appUrl: 'http://localhost:8080',
   firebaseConfig: {
    apiKey: "AIzaSyB8a_25DsWHoFTOQJ9w3zCs4MHw1gR9Zdg",
     authDomain: "anorpsearch.firebaseapp.com",
@@ -14,6 +14,7 @@ export const environment = {
     messagingSenderId: "489237620426",
     appId: "1:489237620426:web:5d876f775dad9093"
   }
+
 };
 
 /*

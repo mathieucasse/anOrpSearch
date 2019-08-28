@@ -58,6 +58,14 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.prod.ts",
+                  "with": "src/environments/environment.ts"
+                }
+              ]
             }
           }
         },
@@ -69,6 +77,9 @@
           "configurations": {
             "production": {
               "browserTarget": "anOrpSearch:build:production"
+            },
+            "dev": {
+              "browserTarget": "anOrpSearch:build:dev"
             }
           }
         },

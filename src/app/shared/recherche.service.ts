@@ -1,34 +1,26 @@
-import { Injectable, OnInit } from '@angular/core';
-import { AngularFireList, AngularFireDatabase } from 'angularfire2/database';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { Validators, FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs/internal/observable/throwError';
-import { catchError } from 'rxjs/operators';
 import 'rxjs/add/operator/catch';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RechercheService {
 
-  constructor(private firebase: AngularFireDatabase,
-              private formBuider: FormBuilder,
+  constructor(private formBuider: FormBuilder,
               private datepipe: DatePipe,
               private httpClient: HttpClient) { }
 
   recherches: any[] = [];
   recherchesSubject = new Subject<any[]>();
-  
-  emitRecherches() {
-    console.log('Emit Recherches ');
-    console.log(this.recherches);
-		this.recherchesSubject.next(this.recherches);
-	}
 
-  baseUrl = 'http://localhost:8080/SuiviRecherches/rest/';
+  baseUrl = environment.appUrl + '/SuiviRecherches/rest/';
 
   allStatutsRecherche: any[] = [];
   allAssignationORP: any[] = [ ];
@@ -37,7 +29,21 @@ export class RechercheService {
 
   form = this.formBuider.group(this.initForm());
 
+  emitRecherches() {
+    console.log('Emit Recherches ');
+    this.recherches.sort((a, b) => {
+            if (a.dateContact < b.dateContact)
+              return -1;
+            if (a.dateContact > b.dateContact)
+              return 1;
+            return 0;});
+    console.log(this.recherches);
+    this.recherchesSubject.next(this.recherches);
+  }
+
   getAllRecherches() {
+    console.log('---getAllRecherches ' + this.baseUrl);
+    
     return this.httpClient.get(this.baseUrl + 'recherches').subscribe((res: any[]) => {
           console.log('getAllRecherche....');
           console.log(res);
@@ -54,6 +60,7 @@ export class RechercheService {
       })
     }).subscribe(
       (res: any[]) => {
+        console.log('insert recherche');
         console.log(res);
         this.recherches.push(this.fromBoot(res));
         this.emitRecherches();
@@ -68,8 +75,10 @@ export class RechercheService {
       })
     }).subscribe(
       (res: any[]) => {
-        console.log(res);
-        this.recherches.push(this.fromBoot(res));
+        const rech = this.fromBoot(res);
+        const rechercheIndexToRemove = this.getRechercheIndexToRemove(rech.$key);
+        this.recherches.splice(rechercheIndexToRemove, 1);
+        this.recherches.push(rech);
         this.emitRecherches();
       },
       error => this.handleError(error));
@@ -77,20 +86,24 @@ export class RechercheService {
 
   deleteRecherche($key) {
     console.log('tryin to delete this recherche ' + $key);
-    
+
     this.httpClient.delete<any[]>(this.baseUrl + 'delRecherche/' + $key).subscribe(
       () => {
         console.log('Recherche with id' + $key + 'deleted !!');
-        const rechercheIndexToRemove = this.recherches.findIndex(
+        const rechercheIndexToRemove = this.getRechercheIndexToRemove($key);
+        this.recherches.splice(rechercheIndexToRemove, 1);
+        this.emitRecherches();
+      },
+      (error) => this.handleError(error));
+  }
+
+  getRechercheIndexToRemove($key) {
+    return this.recherches.findIndex(
             (rechercheEl) => {
               if (rechercheEl.$key === $key) {
                     return true;
               }});
 
-        this.recherches.splice(rechercheIndexToRemove, 1);
-        this.emitRecherches();
-      },
-      (error) => this.handleError(error));
   }
 
   populateForm(recherche) {
@@ -107,7 +120,7 @@ export class RechercheService {
   }
 
   private handleError(errorResponse: HttpErrorResponse) {
-    if(errorResponse.error instanceof ErrorEvent) {
+    if (errorResponse.error instanceof ErrorEvent) {
       console.error('Client Side error : ' + errorResponse.error.message);
     } else {
       console.error('Server Side error : ' + errorResponse);
@@ -207,7 +220,7 @@ export class RechercheService {
     };
   }
 
-  toBoot(recherche){
+  toBoot(recherche) {
     return {
         id: recherche.$key,
         dateContact: this.datepipe.transform(new Date(recherche.dateContact), 'yyyy-MM-dd'),

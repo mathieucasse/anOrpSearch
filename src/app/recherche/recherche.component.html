@@ -1,7 +1,7 @@
 
  <div class="container">
     <h2>Creer une Recherche</h2>
-	<form class="form-group" [formGroup]="this.rechercheService.form" (ngSubmit)="onSubmit()">
+	<form class="form-group" [formGroup]="rechercheForm" (ngSubmit)="onSubmit()">
         <input type="hidden" formControlName="$key">
 		<div class="form-row">
 			<div class="form-group col-md-3">
@@ -27,7 +27,7 @@
                         <span class="input-group-text" id="statut">Statut</span>
                     </div>
                     <select class="form-control" id="statut" formControlName="statut" >
-	   				    <option [value]="statut" *ngFor="let statut of this.rechercheService.allStatutsRecherche">{{statut}}</option>
+	   				    <option [value]="statut" *ngFor="let statut of allStatutsRecherche">{{statut}}</option>
 	    		    </select>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                         <span class="input-group-text" id="assignationORP">Assignation ORP</span>
                     </div>
                     <select class="form-control" id="assignationORP" formControlName="assignationORP">
-	   				    <option [value]="bool" *ngFor="let bool of this.rechercheService.allAssignationORP">{{bool}}</option>
+	   				    <option [value]="bool" *ngFor="let bool of allAssignationORP">{{bool}}</option>
 	    		    </select>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                         <span class="input-group-text" id="tauxActivite">Taux d'activité</span>
                     </div>
                     <select class="form-control" id="tauxActivite" formControlName="tauxActivite">
-	   				    <option [value]="tx" *ngFor="let tx of this.rechercheService.allTauxActivite">{{tx}}</option>
+	   				    <option [value]="tx" *ngFor="let tx of allTauxActivite">{{tx}}</option>
 	    		    </select>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                         <span class="input-group-text" id="approcheMedia">Approche Media</span>
                     </div>
                      <select class="form-control" id="approcheMedia" formControlName="approcheMedia">
-	   				    <option *ngFor="let media of this.rechercheService.allApprocheMedia" [value]="media" >{{media}}</option>
+	   				    <option *ngFor="let media of allApprocheMedia" [value]="media" >{{media}}</option>
 	    		</select>
                 </div>
             </div>
@@ -124,10 +124,10 @@
 		</div>
 	  	<div class="form-row">
 	  		<div class="form-group col-md-2">
-				<button type="submit" class="btn btn-success" [disabled]="this.rechercheService.form.invalid">Submit</button>
+				<button type="submit" class="btn btn-success" [disabled]="rechercheForm.invalid">Submit</button>
 			</div>
 			<div class="form-group col-md-2">
-				<button class="btn btn-primary" (click)="this.rechercheService.resetForm()" [disabled]="!this.rechercheService.keyIdIsNull()">Reset</button>
+				<button class="btn btn-primary" (click)="resetForm()" [disabled]="!keyIdIsNull()">Reset</button>
             </div>
             <div class="form-group col-md-2">
                 <!-- <button class="btn btn-primary" (click)="this.rechercheService.resetForm()" >Back</button> -->
