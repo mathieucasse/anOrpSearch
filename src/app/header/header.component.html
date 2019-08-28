@@ -1,14 +1,13 @@
-<nav class="navbar navbar-default">
+<nav class="navbar sticky-top sticky-dark  navbar-custom">
 	<div class="container-fluid">
 		<ul class="nav">
-        <!-- <ul class="nav"> -->
             <li  routerLinkActive="active"><a class="nav-link" routerLink="recherches">Recherches</a></li>
             <li  routerLinkActive="active"><a class="nav-link" routerLink="recherches/new">Nouvelle Recherche</a></li>
 		</ul>
 		<ul class="nav">
 			<li  routerLinkActive="active" *ngIf="!isAuth"><a class="nav-link" routerLink="auth/signup">Creer un compte</a></li>
 			<li  routerLinkActive="active" *ngIf="!isAuth"><a class="nav-link" routerLink="auth/signin">Connection</a></li>
-			<li  *ngIf="isAuth"><a (click)="onSignOut()" style="cursor:pointer" class="nav-link active" >Déconnection</a></li>
+			<li  *ngIf="isAuth"><a class="nav-link active" (click)="onSignOut()" style="cursor:pointer">Déconnection</a></li>
 		</ul>
 	</div>
 </nav>

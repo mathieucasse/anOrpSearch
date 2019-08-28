@@ -45,4 +45,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - ng add ngx-bootstrap
 - ng add jquery
 - npm i popper.js --save
+- npm install --save rxjs-compat 
 

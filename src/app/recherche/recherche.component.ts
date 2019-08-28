@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './recherche.component.html',
   styleUrls: ['./recherche.component.css']
 })
-export class RechercheComponent implements OnInit {
+export class RechercheComponent  {
 
   submitted: boolean;
   showSuccessMessage: boolean;
@@ -16,14 +16,17 @@ export class RechercheComponent implements OnInit {
   constructor(private rechercheService: RechercheService,
               private router: Router) { }
 
-  ngOnInit() {
-  }
 
   onBack() {
     this.rechercheService.resetForm();
-		this.router.navigate(['/recherches']);
+		  this.router.navigate(['/recherches']);
   }
-  
+
+  // onTest() {
+  //   this.allAssignationORP = this.rechercheService.getAllAssignationOrp();
+	// 	// this.router.navigate(['/recherches']);
+  // }
+
   onSubmit() {
     this.submitted = true;
     // this.logSubmit();
