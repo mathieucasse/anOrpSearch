@@ -25,7 +25,7 @@ export class RechercheComponent  {
 
   onBack() {
     this.rechercheService.resetForm();
-		  this.router.navigate(['/recherches']);
+    this.router.navigate(['/recherches']);
   }
 
   resetForm() {

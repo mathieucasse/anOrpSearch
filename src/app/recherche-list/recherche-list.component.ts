@@ -11,10 +11,10 @@ import { Subscription } from 'rxjs/internal/Subscription';
 })
 export class RechercheListComponent implements OnInit, OnDestroy {
 
-  rechercheArray = [];
+  // rechercheArray = [];
   showDeleteMessage: boolean;
 
-  recherches = [];
+  recherches: any;
   recherchesSubscription: Subscription;
 
   constructor(private rechercheService: RechercheService,
@@ -26,9 +26,8 @@ export class RechercheListComponent implements OnInit, OnDestroy {
     this.recherchesSubscription = this.rechercheService.recherchesSubject.subscribe(recherches => {
          this.recherches = recherches;
     });
-
     this.rechercheService.getAllRecherches();
-    this.rechercheService.emitRecherches();
+    // this.rechercheService.emitRecherches()
 
     this.rechercheService.initStaticLists();
   }
@@ -46,7 +45,12 @@ export class RechercheListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/recherches', 'edit', recherche.$key]);
   }
 
+  onAudit(recherche) {
+    this.router.navigate(['/recherches', 'audit', recherche.$key]);
+  }
+
   ngOnDestroy(): void {
-		this.recherchesSubscription.unsubscribe();
-	}
+    // this.recherchesSubscription.unsubscribe();
+  }
+  
 }

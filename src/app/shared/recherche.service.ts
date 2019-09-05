@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import 'rxjs/add/operator/catch';
 import { environment } from 'src/environments/environment.prod';
+import { RechercheAudit } from '../model/recherche-audit.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,7 @@ export class RechercheService {
   form = this.formBuider.group(this.initForm());
 
   emitRecherches() {
-    console.log('Emit Recherches ');
+    console.log('Emit Recherches ' +  this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS'));
     this.recherches.sort((a, b) => {
             if (a.dateContact < b.dateContact)
               return -1;
@@ -42,15 +43,18 @@ export class RechercheService {
   }
 
   getAllRecherches() {
-    console.log('---getAllRecherches ' + this.baseUrl);
-    
+    console.log('--- getAllRecherches ' + this.baseUrl);
+    if (this.recherches.length !== 0) {
+      console.log(this.recherches);
+      return this.recherches;
+    }
     return this.httpClient.get(this.baseUrl + 'recherches').subscribe((res: any[]) => {
-          console.log('getAllRecherche....');
+          console.log('getAllRecherche....' + this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS'));
           console.log(res);
           this.recherches = res.map(this.fromBoot);
           this.emitRecherches();
         },
-        error => this.handleError(error));
+        error => console.error(error));
   }
 
   insertRecherche(recherche) {
@@ -95,6 +99,18 @@ export class RechercheService {
         this.emitRecherches();
       },
       (error) => this.handleError(error));
+  }
+
+  getAuditRecherche($key) {
+    return this.httpClient.get<RechercheAudit[]>(this.baseUrl + 'auditRecherche/' + $key);
+  }
+
+  getAuditPersonne($key) {
+    return this.httpClient.get(this.baseUrl + 'auditPersonne/' + $key);
+  }
+
+  getAuditEntreprise($key) {
+    return this.httpClient.get(this.baseUrl + 'auditEntreprise/' + $key);
   }
 
   getRechercheIndexToRemove($key) {

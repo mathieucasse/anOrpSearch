@@ -19,6 +19,7 @@ import { AuthService } from './shared/auth.service';
 import { AuthGuardService } from './shared/auth-guard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { RechercheHistComponent } from './recherche-hist/recherche-hist.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     RechercheListComponent,
     HeaderComponent,
     SignupComponent,
-    SigninComponent
+    SigninComponent,
+    RechercheHistComponent
   ],
   imports: [
     BrowserModule,

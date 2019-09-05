@@ -5,6 +5,7 @@ import { SigninComponent } from './auth/signin/signin.component';
 import { AuthGuardService } from './shared/auth-guard.service';
 import { RechercheListComponent } from './recherche-list/recherche-list.component';
 import { RechercheComponent } from './recherche/recherche.component';
+import { RechercheHistComponent } from './recherche-hist/recherche-hist.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
     { path: 'recherches', canActivate: [AuthGuardService], component: RechercheListComponent },
     { path: 'recherches/new', canActivate: [AuthGuardService], component: RechercheComponent },
     { path: 'recherches/edit/:id', canActivate: [AuthGuardService], component: RechercheComponent },
+    { path: 'recherches/audit/:id', canActivate: [AuthGuardService], component: RechercheHistComponent },
     { path: 'not-found', redirectTo: 'recherches', pathMatch: 'full'},
     {path: '', redirectTo: 'recherches', pathMatch: 'full'},
     { path: '**', redirectTo: '/not-found'}

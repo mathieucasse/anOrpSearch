@@ -32,9 +32,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - cd orp-search
 - ng g c auth/signup
 - ng g c auth/signin
+- ng g c recherche
 - ng g c recherche-list
-- ng g c recherche-list/single-recherche
-- ng g c recherche-list/recherche-form
+- ng g c recherche-hist
 - ng g c header
 - ng g s shared/auth
 - ng g s shared/auth-guard

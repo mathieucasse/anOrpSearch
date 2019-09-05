@@ -11,6 +11,7 @@
 			<th scope="col">Tel</th>
 			<th scope="col">Statut</th>
 			<th scope="col">edit</th>
+			<th scope="col">audit</th>
 			<th scope="col">delete</th>
 		</tr>
 	</thead>
@@ -24,6 +25,7 @@
 			<td> {{ recherche.contactPrenom }} {{ recherche.contactNom }} </td>
 			<td> {{ recherche.contactTelephone }} </td>
 			<td> {{ recherche.statut }} </td>
+			<td><a class="btn btn-info btn-sm" (click)="onAudit(recherche)">Audit</a></td>
 			<td><a class="btn btn-warning btn-sm" (click)="onEdit(recherche)">Edit</a></td>  
 			<td><a class="btn btn-danger btn-sm" (click)="onDelete(recherche.$key)">Delete</a></td>
 		</tr>

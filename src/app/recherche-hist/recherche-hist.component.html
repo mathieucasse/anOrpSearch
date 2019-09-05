@@ -1,0 +1,89 @@
+<h2>Audit Recherche {{ id }}</h2>
+<table class="table table-hover table-sm">
+	<thead class="thead-dark">
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Rev</th>
+            <th scope="col">RevType</th>
+            <th scope="col">RevDate</th>
+			<th scope="col">Date</th>
+            <th scope="col">Poste</th>
+            <th scope="col">Statut</th>
+            <th scope="col">ApprocheMedia</th>
+            <th scope="col">AssignationORP</th>
+            <th scope="col">Taux Activité</th>
+            <th scope="col">ID Ent.</th>
+			<th scope="col">ID Pers.</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let recherche of auditRecherche">
+			<td> {{ recherche.id }}</td>
+			<td> {{ recherche.rev }} </td>
+			<td> {{ recherche.revtype }} </td>
+            <td> {{ recherche.revtstmp }} </td>
+            <td> {{ recherche.contactdate }} </td>
+            <td> {{ recherche.poste }} </td>
+            <td> {{ recherche.statut }} </td>
+            <td> {{ recherche.approchemedia }} </td>
+            <td> {{ recherche.assignationORP }} </td>
+            <td> {{ recherche.tauxactivite }} </td>
+            <td> {{ recherche.entreprise_id }} </td>
+			<td> {{ recherche.personne_id }} </td>
+		</tr>
+	</tbody>
+</table>
+<br>
+<h3> Audit Personne for recherche {{ id }}</h3>
+<table class="table table-hover table-sm">
+	<thead class="thead-dark">
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Rev</th>
+            <th scope="col">RevType</th>
+            <th scope="col">RevDate</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prenom</th>
+            <th scope="col">Email</th>
+			<th scope="col">Tel</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let personne of auditPersonne">
+			<td> {{ personne.id }}</td>
+			<td> {{ personne.rev }} </td>
+			<td> {{ personne.revtype }} </td>
+			<td> {{ personne.revtstmp }} </td>
+            <td> {{ personne.nom }} </td>
+            <td> {{ personne.prenom }} </td>
+            <td> {{ personne.email }} </td>
+			<td> {{ personne.telephone }} </td>
+		</tr>
+	</tbody>
+</table>
+<br>
+<h3> Audit Entreprise for recherche {{ id }}</h3>
+<table class="table table-hover table-sm">
+	<thead class="thead-dark">
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Rev</th>
+            <th scope="col">RevType</th>
+            <th scope="col">RevDate</th>
+			<th scope="col">Nom</th>
+			<th scope="col">Tel</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let entreprise of auditEntreprise">
+			<td> {{ id }}</td>
+			<td> {{ entreprise.rev }} </td>
+			<td> {{ entreprise.revtype }} </td>
+			<td> {{ entreprise.revtstmp }} </td>
+			<td> {{ entreprise.nom }} </td>
+			<td> {{ entreprise.telephone }} </td>
+		</tr>
+	</tbody>
+</table>
+
+{{auditEntreprise | json}}
