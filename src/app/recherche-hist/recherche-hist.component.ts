@@ -24,21 +24,38 @@ export class RechercheHistComponent {
           console.log(res);
           this.auditRecherche = res;
 
-          this.rechercheService.getAuditPersonne(this.auditRecherche[0].personne_id).subscribe((res: any[]) => {
-                console.log('getAuditPersonne ....');
+          this.rechercheService.getAuditPersonne(this.auditRecherche[0].personneS_id).subscribe((res: any[]) => {
+                console.log('getAuditPersonne S....');
                 console.log(res);
-                this.auditPersonne = res;
+                this.auditPersonneS = res;
                 },
                 error => console.error(error));
 
-          this.rechercheService.getAuditEntreprise(this.auditRecherche[0].entreprise_id).subscribe((res: any[]) => {
-                console.log('getAuditEntreprise ....');
+          this.rechercheService.getAuditEntreprise(this.auditRecherche[0].entrepriseS_id).subscribe((res: any[]) => {
+                console.log('getAuditEntreprise S....');
                 console.log(res);
-                this.auditEntreprise = res;
+                this.auditEntrepriseS = res;
+                },
+                error => console.error(error));
+
+          
+
+          this.rechercheService.getAuditPersonne(this.auditRecherche[0].personneF_id).subscribe((res: any[]) => {
+                console.log('getAuditPersonne F....');
+                console.log(res);
+                this.auditPersonneF = res;
+                },
+                error => console.error(error));
+
+          this.rechercheService.getAuditEntreprise(this.auditRecherche[0].entrepriseF_id).subscribe((res: any[]) => {
+                console.log('getAuditEntreprise F....');
+                console.log(res);
+                this.auditEntrepriseF = res;
                 },
                 error => console.error(error));
 
           },
+
           error => console.error(error));
       
       
@@ -46,13 +63,15 @@ export class RechercheHistComponent {
       
 
       console.log('this.auditEntreprise');
-      console.log(this.auditEntreprise);
+      console.log(this.auditEntrepriseS);
 
       }
 
   auditRecherche: RechercheAudit[] ;
-  auditPersonne: any[] ;
-  auditEntreprise: any[] ;
+  auditPersonneS: any[] ;
+  auditEntrepriseS: any[] ;
+  auditPersonneF: any[] ;
+  auditEntrepriseF: any[] ;
 
   rechercheForm = this.rechercheService.form;
   id: string;

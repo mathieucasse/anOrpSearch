@@ -33,11 +33,13 @@ export class RechercheService {
   emitRecherches() {
     console.log('Emit Recherches ' +  this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS'));
     this.recherches.sort((a, b) => {
-            if (a.dateContact < b.dateContact)
+            if (a.dateContact < b.dateContact) {
               return -1;
-            if (a.dateContact > b.dateContact)
+            }
+            if (a.dateContact > b.dateContact) {
               return 1;
-            return 0;});
+            }
+            return 0; });
     console.log(this.recherches);
     this.recherchesSubject.next(this.recherches);
   }
@@ -58,7 +60,7 @@ export class RechercheService {
   }
 
   insertRecherche(recherche) {
-    this.httpClient.post<any[]>(this.baseUrl + 'addRecherche', this.toBoot(recherche), {
+    this.httpClient.post<any[]>(this.baseUrl + 'recherche', this.toBoot(recherche), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
@@ -73,7 +75,7 @@ export class RechercheService {
   }
 
   updateRecherche(recherche) {
-    this.httpClient.post<any[]>(this.baseUrl + 'updateRecherche', this.toBoot(recherche), {
+    this.httpClient.put<any[]>(this.baseUrl + 'recherche', this.toBoot(recherche), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
@@ -102,15 +104,15 @@ export class RechercheService {
   }
 
   getAuditRecherche($key) {
-    return this.httpClient.get<RechercheAudit[]>(this.baseUrl + 'auditRecherche/' + $key);
+    return this.httpClient.get<RechercheAudit[]>(this.baseUrl + 'audit/recherche/' + $key);
   }
 
   getAuditPersonne($key) {
-    return this.httpClient.get(this.baseUrl + 'auditPersonne/' + $key);
+    return this.httpClient.get(this.baseUrl + 'audit/personne/' + $key);
   }
 
   getAuditEntreprise($key) {
-    return this.httpClient.get(this.baseUrl + 'auditEntreprise/' + $key);
+    return this.httpClient.get(this.baseUrl + 'audit/entreprise/' + $key);
   }
 
   getRechercheIndexToRemove($key) {
@@ -204,14 +206,19 @@ export class RechercheService {
       tauxActivite: ['100', Validators.required],
       approcheMedia: ['Ecrit', Validators.required],
 
-      client: [''],
-      entreprise: ['', Validators.required],
+      entrepriseS: ['', Validators.required],
+      entrepriseTelS: [''],
+      contactNomS: [''],
+      contactPrenomS: [''],
+      contactEmailS: ['', Validators.email],
+      contactTelephoneS: ['', Validators.minLength(8)],
 
-      contactNom: ['', Validators.required],
-      contactPrenom: [''],
-
-      contactEmail: [''],
-      contactTelephone: ['', Validators.minLength(8)]
+      entrepriseF: ['', ],
+      entrepriseTelF: [''],
+      contactNomF: [''],
+      contactPrenomF: [''],
+      contactEmailF: ['', Validators.email],
+      contactTelephoneF: ['', Validators.minLength(8)]
     };
   }
 
@@ -247,14 +254,21 @@ export class RechercheService {
         tauxActivite: recherche.tauxActivite,
         approcheMedia: recherche.approcheMedia,
 
-        client: recherche.client,
-        entreprise: recherche.entreprise,
+        entrepriseS: recherche.entrepriseS,
+        entrepriseTelS: recherche.entrepriseTelS,
+        contactNomS: recherche.contactNomS,
+        contactPrenomS: recherche.contactPrenomS,
+        contactEmailS: recherche.contactEmailS,
+        contactTelephoneS: recherche.contactTelephoneS,
 
-        contactNom: recherche.contactNom,
-        contactPrenom: recherche.contactPrenom,
+        entrepriseF: recherche.entrepriseF,
+        entrepriseTelF: recherche.entrepriseTelF,
+        contactNomF: recherche.contactNomF,
+        contactPrenomF: recherche.contactPrenomF,
+        contactEmailF: recherche.contactEmailF,
+        contactTelephoneF: recherche.contactTelephoneF,
 
-        contactEmail: recherche.contactEmail,
-        contactTelephone: recherche.contactTelephone
+
     };
   }
 
@@ -269,14 +283,19 @@ export class RechercheService {
         tauxActivite: recherche.tauxActivite,
         approcheMedia: recherche.approcheMedia,
 
-        client: recherche.client,
-        entreprise: recherche.entreprise,
+        entrepriseS: recherche.entrepriseS,
+        entrepriseTelS: recherche.entrepriseTelS,
+        contactNomS: recherche.contactNomS,
+        contactPrenomS: recherche.contactPrenomS,
+        contactEmailS: recherche.contactEmailS,
+        contactTelephoneS: recherche.contactTelephoneS,
 
-        contactNom: recherche.contactNom,
-        contactPrenom: recherche.contactPrenom,
-
-        contactEmail: recherche.contactEmail,
-        contactTelephone: recherche.contactTelephone
+        entrepriseF: recherche.entrepriseF,
+        entrepriseTelF: recherche.entrepriseTelF,
+        contactNomF: recherche.contactNomF,
+        contactPrenomF: recherche.contactPrenomF,
+        contactEmailF: recherche.contactEmailF,
+        contactTelephoneF: recherche.contactTelephoneF,
     };
   }
 }

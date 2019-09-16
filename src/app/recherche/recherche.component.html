@@ -1,6 +1,7 @@
 
  <div class="container">
-    <h2>Creer une Recherche</h2>
+    <h2 [hidden]="keyIdIsNull()" >Update Recherche</h2>
+    <h2 [hidden]="!keyIdIsNull()" >Creer une Recherche</h2>
 	<form class="form-group" [formGroup]="rechercheForm" (ngSubmit)="onSubmit()">
         <input type="hidden" formControlName="$key">
 		<div class="form-row">
@@ -64,70 +65,127 @@
                 </div>
             </div>
         </div>
-        <h3>Entreprise</h3>
-	  	<div class="form-row">
-	   	    <div class="form-group col-md-6">
+        
+        
+        <h3>Entreprise de Conatct</h3>
+        <div class="form-row">
+            <div class="form-group col-md-6">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="entreprise">Service</span>
+                        <span class="input-group-text" id="entrepriseS">Nom</span>
                     </div>
-                     <input type="text" class="form-control" id="entreprise" formControlName="entreprise" placeholder="Fournisseur de service"/>
+                     <input type="text" class="form-control" id="entrepriseS" formControlName="entrepriseS" placeholder="Fournisseur de service"/>
                 </div>
             </div>
-             <div class="form-group col-md-6">
-	   			<div class="input-group">
+            <div class="form-group col-md-6">
+                <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="client">Client</span>
+                        <span class="input-group-text" id="entrepriseTelS">Tel.</span>
                     </div>
-                    <input type="text" class="form-control" id="client" formControlName="client" placeholder="Client"/>
+                     <input type="text" class="form-control" id="entrepriseTelS" formControlName="entrepriseTelS" placeholder="Telephone"/>
                 </div>
-	  		</div>
-	  	</div>
+            </div>
+        </div>
 
-		<h3>Contact</h3>
-	  	<div class="form-row">
-	   		<div class="form-group col-md-6">
+        <div class="form-row">
+	   		<div class="form-group col-md-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="contactNom">Nom</span>
+                        <span class="input-group-text" id="contactNomS">Nom</span>
                     </div>
-                    <input type="text" class="form-control" id="contactNom" formControlName="contactNom" placeholder="Nom"/>
+                    <input type="text" class="form-control" id="contactNomS" formControlName="contactNomS" placeholder="Nom"/>
                 </div>
 	  		</div>
-	  		<div class="form-group col-md-6">
+	  		<div class="form-group col-md-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="contactPrenom">Prenom</span>
+                        <span class="input-group-text" id="contactPrenomS">Prenom</span>
                     </div>
-                    <input type="text" class="form-control" id="contactPrenom" formControlName="contactPrenom" placeholder="Prenom"/>
+                    <input type="text" class="form-control" id="contactPrenomS" formControlName="contactPrenomS" placeholder="Prenom"/>
                 </div>
 	  		</div>
-	  	</div>
-	  	<div class="form-row">
                 
-	   		<div class="form-group col-md-4">
+	   		<div class="form-group col-md-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="contactTelephone">Telephone</span>
+                        <span class="input-group-text" id="contactTelephoneC">Telephone</span>
                     </div>
-                    <input type="text" class="form-control" id="contactTelephone" formControlName="contactTelephone" placeholder="0000 0 00 00 00"/>
+                    <input type="text" class="form-control" id="contactTelephoneS" formControlName="contactTelephoneS" placeholder="0000 0 00 00 00"/>
                 </div>	
 	  		</div>
-	  		<div class="form-group col-md-8">
+	  		<div class="form-group col-md-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="contactEmail">Email</span>
+                        <span class="input-group-text" id="contactEmailS">Email</span>
                     </div>
-                    <input type="text" class="form-control" id="contactEmail" formControlName="contactEmail" placeholder="xxx@yyy.zzz"/>
+                    <input type="text" class="form-control" id="contactEmailS" formControlName="contactEmailS" placeholder="xxx@yyy.zzz"/>
                 </div>
             </div>
-		</div>
+        </div>
+        
+        <h3>Entreprise Finale</h3>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="entrepriseF">Nom</span>
+                    </div>
+                     <input type="text" class="form-control" id="entrepriseF" formControlName="entrepriseF" placeholder="Fournisseur de service"/>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="entrepriseTelF">Tel.</span>
+                    </div>
+                     <input type="text" class="form-control" id="entrepriseTelF" formControlName="entrepriseTelF" placeholder="Telephone"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+	   		<div class="form-group col-md-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="contactNomF">Nom</span>
+                    </div>
+                    <input type="text" class="form-control" id="contactNomF" formControlName="contactNomF" placeholder="Nom"/>
+                </div>
+	  		</div>
+	  		<div class="form-group col-md-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="contactPrenomF">Prenom</span>
+                    </div>
+                    <input type="text" class="form-control" id="contactPrenomF" formControlName="contactPrenomF" placeholder="Prenom"/>
+                </div>
+	  		</div>
+                
+	   		<div class="form-group col-md-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="contactTelephoneF">Telephone</span>
+                    </div>
+                    <input type="text" class="form-control" id="contactTelephoneF" formControlName="contactTelephoneF" placeholder="0000 0 00 00 00"/>
+                </div>	
+	  		</div>
+	  		<div class="form-group col-md-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="contactEmailF">Email</span>
+                    </div>
+                    <input type="text" class="form-control" id="contactEmailF" formControlName="contactEmailF" placeholder="xxx@yyy.zzz"/>
+                </div>
+            </div>
+        </div>
+
+	  	
 	  	<div class="form-row">
 	  		<div class="form-group col-md-2">
 				<button type="submit" class="btn btn-success" [disabled]="rechercheForm.invalid">Submit</button>
 			</div>
 			<div class="form-group col-md-2">
-				<button class="btn btn-primary" (click)="resetForm()" [disabled]="!keyIdIsNull()">Reset</button>
+				<button class="btn btn-primary" (click)="resetForm()" [disabled]="rechercheForm.invalid" [hidden]="!keyIdIsNull()">Reset</button>
             </div>
             <div class="form-group col-md-2">
                 <!-- <button class="btn btn-primary" (click)="this.rechercheService.resetForm()" >Back</button> -->

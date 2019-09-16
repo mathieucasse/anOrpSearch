@@ -27,7 +27,7 @@ export class RechercheListComponent implements OnInit, OnDestroy {
          this.recherches = recherches;
     });
     this.rechercheService.getAllRecherches();
-    // this.rechercheService.emitRecherches()
+    this.rechercheService.emitRecherches()
 
     this.rechercheService.initStaticLists();
   }
@@ -50,7 +50,7 @@ export class RechercheListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this.recherchesSubscription.unsubscribe();
+    this.recherchesSubscription.unsubscribe();
   }
   
 }
