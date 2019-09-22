@@ -21,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { RechercheHistComponent } from './recherche-hist/recherche-hist.component';
 import { RechercheEventComponent } from './recherche-event/recherche-event.component';
+import { EventAuditComponent } from './event-audit/event-audit.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { RechercheEventComponent } from './recherche-event/recherche-event.compo
     SignupComponent,
     SigninComponent,
     RechercheHistComponent,
-    RechercheEventComponent
+    RechercheEventComponent,
+    EventAuditComponent
   ],
   imports: [
     BrowserModule,

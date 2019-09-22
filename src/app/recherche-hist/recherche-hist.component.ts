@@ -11,8 +11,16 @@ import { RechercheAudit } from '../model/recherche-audit.model';
 })
 export class RechercheHistComponent {
 
+  auditRecherche: RechercheAudit[] ;
+  auditPersonneS: any[] ;
+  auditEntrepriseS: any[] ;
+  auditPersonneF: any[] ;
+  auditEntrepriseF: any[] ;
+  rechercheForm = this.rechercheService.form;
+  id: string;
+
+
   constructor(private rechercheService: RechercheService,
-              private router: Router,
               private activatedRoute: ActivatedRoute) {
 
 
@@ -38,8 +46,6 @@ export class RechercheHistComponent {
                 },
                 error => console.error(error));
 
-          
-
           this.rechercheService.getAuditPersonne(this.auditRecherche[0].personneF_id).subscribe((res: any[]) => {
                 console.log('getAuditPersonne F....');
                 console.log(res);
@@ -54,28 +60,12 @@ export class RechercheHistComponent {
                 },
                 error => console.error(error));
 
-          },
+      },
 
-          error => console.error(error));
-      
-      
-
-      
-
+      error => console.error(error));
       console.log('this.auditEntreprise');
       console.log(this.auditEntrepriseS);
 
-      }
-
-  auditRecherche: RechercheAudit[] ;
-  auditPersonneS: any[] ;
-  auditEntrepriseS: any[] ;
-  auditPersonneF: any[] ;
-  auditEntrepriseF: any[] ;
-
-  rechercheForm = this.rechercheService.form;
-  id: string;
-
-
+ }
 
 }

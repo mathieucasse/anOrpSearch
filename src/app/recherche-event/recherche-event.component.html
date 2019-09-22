@@ -1,1 +1,100 @@
-<p>recherche-event works!</p>
+<div class="alert alert-info" *ngIf="showSuccessMessage">
+            Submitted successfully !!!
+</div>
+
+ <div class="container">
+     <h2 *ngIf="this.eventForm.get('id').value !== null" >Update Event</h2>
+     <h2 *ngIf="this.eventForm.get('id').value === null" >Create Event</h2>
+	<form class="form-group" [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+        <input type="hidden" formControlName="id">
+        <input type="hidden" formControlName="rechercheId" value="rechercheId">
+		<div class="form-row">
+			<div class="form-group col-md-2">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="eventDate">Date</span>
+                    </div>
+                    <input type="text"  class="form-control" id="eventDate" formControlName="eventDate"
+                        bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-default' }"/>
+                </div>
+			</div>
+	    	<div class="form-group col-md-2">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="titre">Titre</span>
+                    </div>
+                    <input type="text" class="form-control" id="titre" formControlName="titre" placeholder="Titre"/>
+                </div>
+			</div>
+			<div class="form-group col-md-8">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="texte">Texte</span>
+                    </div>
+                    <input type="text" class="form-control" id="texte" formControlName="texte" placeholder="Texte"/>
+                </div>
+            </div>
+        </div>
+        
+	  	
+	  	<div class="form-row">
+	  		<div class="form-group col-md-2">
+				<button type="submit" class="btn btn-success" [disabled]="eventForm.invalid">Submit</button>
+			</div>
+			<div class="form-group col-md-2">
+				<button class="btn btn-primary" (click)="onReset()" [disabled]="eventForm.invalid" >Reset</button>
+            </div>
+            <div class="form-group col-md-2">
+                <!-- <button class="btn btn-primary" (click)="this.rechercheService.resetForm()" >Back</button> -->
+                <button class="btn btn-secondary" (click)="onBack()">Recherches</button> 
+            </div>
+		</div>
+    </form>
+</div>
+
+<h2>Events on rechercheId {{ rechercheId}}</h2>
+<table class="table table-hover table-sm">
+	<thead class="thead-dark">
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Date</th>
+			<th scope="col">Titre</th>
+			<th scope="col">Texte</th>
+            <th scope="col">Audit</th>
+            <th scope="col">Edit</th>
+			<th scope="col">Delete</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let event of events; let i = index">
+			<td> {{ i+1 }}</td>
+			<td> {{ event.eventDate | date:'yyyy-MM-dd' }} </td>
+			<td> {{ event.titre }} </td>
+			<td> {{ event.texte }} </td>
+			<td><a class="btn btn-info btn-sm" (click)="onAudit(event)">Audit</a></td>
+			<td><a class="btn btn-warning btn-sm" (click)="onEdit(event)">Edit</a></td>  
+			<td><a class="btn btn-danger btn-sm" (click)="onDelete(event)">Delete</a></td>
+		</tr>
+	</tbody>
+</table>
+
+
+
+<!-- <br> -->
+<!-- this.idIsNull() = {{ this.idIsNull() }} -->
+<!-- <br>
+this.eventForm = {{ this.eventForm.value | json }}
+<br>
+eventForm.id = {{ this.eventForm.get('id').value }}
+<br>
+rechercheId = {{ this.rechercheId }} -->
+<!--<br>
+{{ this.rechercheService.form.value | json }}
+<br>
+formControls.entreprise.valid = {{ formControls.entreprise.valid }}
+<br>
+formControls.client.valid = {{ formControls.client.valid }}
+<br>
+Submitted = {{ submitted }}
+<br>
+invalid ? = {{ formControls.invalid  }} -->

@@ -40,6 +40,11 @@ export class RechercheListComponent implements OnInit, OnDestroy {
     }
   }
 
+  onEvent(recherche) {
+    // this.event.populateForm(recherche);
+    this.router.navigate(['/recherche', 'events', recherche.$key]);
+  }
+
   onEdit(recherche) {
     this.rechercheService.populateForm(recherche);
     this.router.navigate(['/recherches', 'edit', recherche.$key]);

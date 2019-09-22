@@ -1,0 +1,39 @@
+<h2>Audit Event</h2>
+<table class="table table-hover table-sm">
+	<thead class="thead-dark">
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">Rev</th>
+            <th scope="col">RevType</th>
+            <th scope="col">RevDate</th>
+			<th scope="col">Date</th>
+            <th scope="col">Titre</th>
+            <th scope="col">Texte</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let event of eventAudit">
+			<td> {{ event.id }}</td>
+			<td> {{ event.rev }} </td>
+			<td> {{ event.revtype }} </td>
+            <td> {{ event.revtstmp }} </td>
+            <td> {{ event.eventDate }} </td>
+            <td> {{ event.titre }} </td>
+            <td> {{ event.texte }} </td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="form-row">
+	<div class="form-group col-md-2">
+        <div class="form-group col-md-2">
+            <!-- <button class="btn btn-primary" (click)="this.rechercheService.resetForm()" >Back</button> -->
+            <button class="btn btn-secondary" (click)="onBack()">Recherches</button> 
+        </div>
+    </div>
+</div>
+
+<!-- <br>
+event = {{ this.event }}
+<br>
+eventAudit = {{ this.eventAudit }} -->

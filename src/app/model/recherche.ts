@@ -1,5 +1,5 @@
 export interface Recherche {
-    $key: number;
+    id: number;
     dateContact: string;
     poste: string;
     statut: string;
