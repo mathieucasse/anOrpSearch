@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  appUrl: 'http://localhost:8089',
+  appUrl: 'http://ec2-3-19-239-63.us-east-2.compute.amazonaws.com:8080',
 
   firebaseConfig: {
    apiKey: "AIzaSyB8a_25DsWHoFTOQJ9w3zCs4MHw1gR9Zdg",

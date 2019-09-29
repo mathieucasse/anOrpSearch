@@ -8,6 +8,7 @@ import 'rxjs/add/operator/catch';
 import { environment } from 'src/environments/environment.prod';
 import { RechercheAudit } from '../model/recherche-audit.model';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -57,6 +58,21 @@ export class RechercheService {
         },
         error => console.error(error));
   }
+
+  // getAllRecherches() {
+  //   console.log('--- getAllRecherches ' + this.baseUrl);
+  //   if (this.recherches.length !== 0) {
+  //     console.log(this.recherches);
+  //     return this.recherches;
+  //   }
+  //   return this.httpClient.get(this.baseUrl + 'recherches/' + this.authService.email).subscribe((res: any[]) => {
+  //       console.log('getAllRecherche....' + this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS'));
+  //       console.log(res);
+  //       this.recherches = res.map(this.fromBoot);
+  //       this.emitRecherches();
+  //     },
+  //     error => console.error(error));
+  // }
 
   insertRecherche(recherche) {
     this.httpClient.post<any[]>(this.baseUrl + 'recherche', this.toBoot(recherche), {

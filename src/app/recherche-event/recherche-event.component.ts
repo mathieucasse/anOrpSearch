@@ -20,6 +20,7 @@ export class RechercheEventComponent implements OnInit, OnDestroy {
   showDeleteMessage: boolean;
   eventForm: FormGroup;
   rechercheId: number;
+
   private event: Event = new Event();
 
   constructor(private eventService: EventService,
@@ -53,7 +54,7 @@ export class RechercheEventComponent implements OnInit, OnDestroy {
 
 
   onEdit(event: Event) {
-    console.log('onEdit event : ' + JSON.stringify(event))
+    console.log('onEdit event : ' + JSON.stringify(event));
     event.rechercheId = this.rechercheId;
     this.eventService.populateForm(event);
   }
@@ -62,7 +63,7 @@ export class RechercheEventComponent implements OnInit, OnDestroy {
     this.eventService.resetForm();
   }
   onAudit(event: Event) {
-    console.log('onAudit event : ' + JSON.stringify(event))
+    console.log('onAudit event : ' + JSON.stringify(event));
     event.rechercheId = this.rechercheId;
     this.eventService.auditedEvent = event;
     this.router.navigate(['/event', 'audit']);

@@ -65,14 +65,14 @@
                 </div>
             </div>
         </div>
-        
-        
+
+
         <h3>Entreprise de Conatct</h3>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="entrepriseS">Nom</span>
+                        <span class="input-group-text" id="entrepriseS">Entreprise</span>
                     </div>
                      <input type="text" class="form-control" id="entrepriseS" formControlName="entrepriseS" placeholder="Fournisseur de service"/>
                 </div>
@@ -104,14 +104,14 @@
                     <input type="text" class="form-control" id="contactPrenomS" formControlName="contactPrenomS" placeholder="Prenom"/>
                 </div>
 	  		</div>
-                
+
 	   		<div class="form-group col-md-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="contactTelephoneC">Telephone</span>
                     </div>
                     <input type="text" class="form-control" id="contactTelephoneS" formControlName="contactTelephoneS" placeholder="0000 0 00 00 00"/>
-                </div>	
+                </div>
 	  		</div>
 	  		<div class="form-group col-md-3">
                 <div class="input-group">
@@ -122,13 +122,13 @@
                 </div>
             </div>
         </div>
-        
+
         <h3>Entreprise Finale</h3>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="entrepriseF">Nom</span>
+                        <span class="input-group-text" id="entrepriseF">Entreprise</span>
                     </div>
                      <input type="text" class="form-control" id="entrepriseF" formControlName="entrepriseF" placeholder="Fournisseur de service"/>
                 </div>
@@ -160,14 +160,14 @@
                     <input type="text" class="form-control" id="contactPrenomF" formControlName="contactPrenomF" placeholder="Prenom"/>
                 </div>
 	  		</div>
-                
+
 	   		<div class="form-group col-md-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="contactTelephoneF">Telephone</span>
                     </div>
                     <input type="text" class="form-control" id="contactTelephoneF" formControlName="contactTelephoneF" placeholder="0000 0 00 00 00"/>
-                </div>	
+                </div>
 	  		</div>
 	  		<div class="form-group col-md-3">
                 <div class="input-group">
@@ -179,23 +179,23 @@
             </div>
         </div>
 
-	  	
+
 	  	<div class="form-row">
 	  		<div class="form-group col-md-2">
-				<button type="submit" class="btn btn-success" [disabled]="rechercheForm.invalid">Submit</button>
-			</div>
-			<div class="form-group col-md-2">
-				<button class="btn btn-primary" (click)="resetForm()" [disabled]="rechercheForm.invalid" [hidden]="!keyIdIsNull()">Reset</button>
-            </div>
-            <div class="form-group col-md-2">
+				  <button type="submit" class="btn btn-success" [disabled]="rechercheForm.invalid">Submit</button>
+			  </div>
+			  <div class="form-group col-md-2">
+				  <button class="btn btn-primary" (click)="resetForm()" [disabled]="rechercheForm.invalid" [hidden]="!keyIdIsNull()">Reset</button>
+        </div>
+        <div class="form-group col-md-2">
                 <!-- <button class="btn btn-primary" (click)="this.rechercheService.resetForm()" >Back</button> -->
-                <button class="btn btn-secondary" (click)="onBack()">Back</button> 
-            </div>
-            <div class="form-group col-md-2">
+          <button class="btn btn-secondary" (click)="onBack()">Back</button>
+        </div>
+        <div class="form-group col-md-2">
                 <!-- <button class="btn btn-primary" (click)="this.rechercheService.resetForm()" >Back</button> -->
                 <!-- <button class="btn btn-secondary" (click)="onTest()">Test</button>  -->
-			</div>
-		</div>
+			  </div>
+		  </div>
     </form>
     <div class="alert alert-info" *ngIf="showSuccessMessage">
             Submitted successfully !!!

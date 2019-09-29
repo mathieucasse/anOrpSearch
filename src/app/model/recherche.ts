@@ -21,6 +21,8 @@ export interface Recherche {
     contactEmailF: string;
     contactTelephoneF: string;
 
+    userEmail: string;
+
     //Evenement[];
-        
+
 }
