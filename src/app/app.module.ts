@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { DatePipe } from '@angular/common'
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,13 +15,16 @@ import { environment } from 'src/environments/environment';
 import { HeaderComponent } from './header/header.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { SigninComponent } from './auth/signin/signin.component';
-import { AuthService } from './shared/auth.service';
+import { UserService } from './shared/user.service';
 import { AuthGuardService } from './shared/auth-guard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { RechercheHistComponent } from './recherche-hist/recherche-hist.component';
 import { RechercheEventComponent } from './recherche-event/recherche-event.component';
 import { EventAuditComponent } from './event-audit/event-audit.component';
+import {AuthService} from "./shared/auth.service";
+import {JwtInterceptor} from "./shared/jwt.interceptor";
+import {ErrorInterceptor} from "./shared/error.interceptor";
 
 @NgModule({
   declarations: [
@@ -46,10 +49,13 @@ import { EventAuditComponent } from './event-audit/event-audit.component';
     AppRoutingModule
   ],
   providers: [
-    AuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    UserService,
     AuthGuardService,
     RechercheService,
-    DatePipe
+    DatePipe,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

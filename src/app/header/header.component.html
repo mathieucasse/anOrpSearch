@@ -5,9 +5,10 @@
             <li  routerLinkActive="active"><a class="nav-link" routerLink="recherches/new">Nouvelle Recherche</a></li>
 		</ul>
 		<ul class="nav">
-			<li  routerLinkActive="active" *ngIf="!isAuth"><a class="nav-link" routerLink="auth/signup">Creer un compte</a></li>
-			<li  routerLinkActive="active" *ngIf="!isAuth"><a class="nav-link" routerLink="auth/signin">Connection</a></li>
-			<li  *ngIf="isAuth"><a class="nav-link active" (click)="onSignOut()" style="cursor:pointer">Déconnection</a></li>
+<!--			<li  routerLinkActive="active" *ngIf="isAdmin()"><a class="nav-link" routerLink="auth/signup">Creer un compte</a></li>-->
+			<li  routerLinkActive="active" *ngIf="!isStillAuth()"><a class="nav-link" routerLink="auth/signin">Connection</a></li>
+			<li  *ngIf="isStillAuth()"><a class="nav-link active" (click)="onSignOut()" style="cursor:pointer">Déconnection</a></li>
+      <li  *ngIf="isAdmin()"><a class="nav-link active" routerLink="auth/signup">Creer un compte</a></li>
 		</ul>
 	</div>
 </nav>

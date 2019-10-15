@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import * as firebase from 'firebase';
-import { AuthService } from '../shared/auth.service';
+import { Component, OnInit} from '@angular/core';
+import { UserService } from '../shared/user.service';
+import {AuthService} from "../shared/auth.service";
+import {Subscription} from "rxjs";
+import {User} from "../model/user";
 
 @Component({
   selector: 'app-header',
@@ -10,23 +12,28 @@ import { AuthService } from '../shared/auth.service';
 export class HeaderComponent implements OnInit {
 
   isAuth: boolean;
+  authUser: User;
+  authUserSubscription: Subscription;
 
-	constructor(private authService: AuthService) { }
+	constructor(private userService: UserService,
+              private authService: AuthService) { }
 
 	ngOnInit() {
-		firebase.auth().onAuthStateChanged(
-			(user) => {
-				if (user) {
-					this.isAuth = true;
-				} else {
-					this.isAuth = false;
-				}
-			}
-		);
+    this.authUserSubscription = this.authService.currentUser.subscribe(authUser => {
+      this.authUser = authUser;
+    });
 	}
 
 	onSignOut() {
-		this.authService.signOutUser();
+		this.userService.logout();
+    this.authService.logout();
 	}
 
+	isAdmin(){
+	  return this.userService.isAdminUser();
+  }
+
+	isStillAuth(){
+    return this.isAuth = (this.authUser) ? true : false;
+  }
 }

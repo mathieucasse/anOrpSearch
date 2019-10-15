@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'auth/signup', component: SignupComponent },
   { path: 'auth/signin', component: SigninComponent },
   { path: 'recherches', canActivate: [AuthGuardService], component: RechercheListComponent },
-  { path: 'recherches/new/', canActivate: [AuthGuardService], component: RechercheComponent },
+  { path: 'recherches/new', canActivate: [AuthGuardService], component: RechercheComponent },
   { path: 'recherches/edit/:id', canActivate: [AuthGuardService], component: RechercheComponent },
   { path: 'recherches/audit/:id', canActivate: [AuthGuardService], component: RechercheHistComponent },
   { path: 'recherche/events/:id', canActivate: [AuthGuardService], component: RechercheEventComponent },

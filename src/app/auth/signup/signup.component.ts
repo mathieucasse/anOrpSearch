@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/shared/auth.service';
+import { UserService } from 'src/app/shared/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -14,12 +14,13 @@ export class SignupComponent implements OnInit {
 	errorMessage: string;
 
 	constructor(private formBuilder: FormBuilder,
-							      private authService: AuthService,
+							      private authService: UserService,
 							      private router: Router) { }
 
 	ngOnInit() {
 		this.initForm();
 	}
+
 	initForm() {
 		this.signUpForm = this.formBuilder.group({
 			email: ['', [Validators.required, Validators.email]],

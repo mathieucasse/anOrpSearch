@@ -7,6 +7,7 @@ import { throwError } from 'rxjs/internal/observable/throwError';
 import 'rxjs/add/operator/catch';
 import { environment } from 'src/environments/environment.prod';
 import { RechercheAudit } from '../model/recherche-audit.model';
+import {UserService} from "./user.service";
 
 
 @Injectable({
@@ -16,6 +17,7 @@ export class RechercheService {
 
   constructor(private formBuider: FormBuilder,
               private datepipe: DatePipe,
+              private authService: UserService,
               private httpClient: HttpClient) { }
 
   recherches: any[] = [];
@@ -34,29 +36,14 @@ export class RechercheService {
     console.log('Emit Recherches ' +  this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS'));
     this.recherches.sort((a, b) => {
             if (a.dateContact < b.dateContact) {
-              return -1;
+              return 1;
             }
             if (a.dateContact > b.dateContact) {
-              return 1;
+              return -1;
             }
             return 0; });
     console.log(this.recherches);
     this.recherchesSubject.next(this.recherches);
-  }
-
-  getAllRecherches() {
-    console.log('--- getAllRecherches ' + this.baseUrl);
-    if (this.recherches.length !== 0) {
-      console.log(this.recherches);
-      return this.recherches;
-    }
-    return this.httpClient.get(this.baseUrl + 'recherches').subscribe((res: any[]) => {
-          console.log('getAllRecherche....' + this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS'));
-          console.log(res);
-          this.recherches = res.map(this.fromBoot);
-          this.emitRecherches();
-        },
-        error => console.error(error));
   }
 
   // getAllRecherches() {
@@ -65,14 +52,29 @@ export class RechercheService {
   //     console.log(this.recherches);
   //     return this.recherches;
   //   }
-  //   return this.httpClient.get(this.baseUrl + 'recherches/' + this.authService.email).subscribe((res: any[]) => {
-  //       console.log('getAllRecherche....' + this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS'));
-  //       console.log(res);
-  //       this.recherches = res.map(this.fromBoot);
-  //       this.emitRecherches();
-  //     },
-  //     error => console.error(error));
+  //   return this.httpClient.get(this.baseUrl + 'recherches').subscribe((res: any[]) => {
+  //         console.log('getAllRecherche....' + this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS'));
+  //         console.log(res);
+  //         this.recherches = res.map(this.fromBoot);
+  //         this.emitRecherches();
+  //       },
+  //       error => console.error(error));
   // }
+
+  getAllRecherches() {
+    console.log('--- getAllRecherches ' + this.baseUrl);
+    if (this.recherches.length !== 0) {
+      console.log(this.recherches);
+      return this.recherches;
+    }
+    return this.httpClient.get(this.baseUrl + 'recherches/' + this.authService.user.email).subscribe((res: any[]) => {
+        console.log('getAllRecherche....' + this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS'));
+        console.log(res);
+        this.recherches = res.map(this.fromBoot);
+        this.emitRecherches();
+      },
+      error => console.error(error));
+  }
 
   insertRecherche(recherche) {
     this.httpClient.post<any[]>(this.baseUrl + 'recherche', this.toBoot(recherche), {
@@ -86,7 +88,7 @@ export class RechercheService {
         this.recherches.push(this.fromBoot(res));
         this.emitRecherches();
       },
-      error => this.handleError(error));
+      error => RechercheService.handleError(error));
   }
 
   updateRecherche(recherche) {
@@ -102,7 +104,7 @@ export class RechercheService {
         this.recherches.push(rech);
         this.emitRecherches();
       },
-      error => this.handleError(error));
+      error => RechercheService.handleError(error));
   }
 
   deleteRecherche($key) {
@@ -115,7 +117,7 @@ export class RechercheService {
         this.recherches.splice(rechercheIndexToRemove, 1);
         this.emitRecherches();
       },
-      (error) => this.handleError(error));
+      (error) => RechercheService.handleError(error));
   }
 
   getAuditRecherche($key) {
@@ -152,7 +154,7 @@ export class RechercheService {
     return this.form.get('$key').value === null;
   }
 
-  private handleError(errorResponse: HttpErrorResponse) {
+  private static handleError(errorResponse: HttpErrorResponse) {
     if (errorResponse.error instanceof ErrorEvent) {
       console.error('Client Side error : ' + errorResponse.error.message);
     } else {
@@ -173,7 +175,7 @@ export class RechercheService {
         console.log(res);
         this.allStatutsRecherche = res;
         },
-        error => this.handleError(error));
+        error => RechercheService.handleError(error));
     }
     return this.allStatutsRecherche;
   }
@@ -184,7 +186,7 @@ export class RechercheService {
         console.log(res);
         this.allAssignationORP = res;
         },
-        error => this.handleError(error));
+        error => RechercheService.handleError(error));
     }
     return this.allAssignationORP;
   }
@@ -195,7 +197,7 @@ export class RechercheService {
         console.log(res);
         this.allTauxActivite = res;
         },
-        error => this.handleError(error));
+        error => RechercheService.handleError(error));
     }
     return this.allTauxActivite;
   }
@@ -206,7 +208,7 @@ export class RechercheService {
           console.log(res);
           this.allApprocheMedia = res;
         },
-        error => this.handleError(error));
+        error => RechercheService.handleError(error));
     }
     return this.allApprocheMedia;
   }
