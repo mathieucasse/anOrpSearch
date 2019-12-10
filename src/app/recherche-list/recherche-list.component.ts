@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RechercheService } from '../shared/recherche.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
+import {StaticlistsService} from "../shared/staticlists.service";
 
 
 @Component({
@@ -14,10 +15,11 @@ export class RechercheListComponent implements OnInit, OnDestroy {
   // rechercheArray = [];
   showDeleteMessage: boolean;
 
-  recherches: any;
+  recherches: any[];
   recherchesSubscription: Subscription;
 
   constructor(private rechercheService: RechercheService,
+              private staticlistsService : StaticlistsService,
               private router: Router) { }
 
   ngOnInit() {
@@ -29,12 +31,12 @@ export class RechercheListComponent implements OnInit, OnDestroy {
     this.rechercheService.getAllRecherches();
     this.rechercheService.emitRecherches()
 
-    this.rechercheService.initStaticLists();
+    this.staticlistsService.initStaticLists();
   }
 
-  onDelete($key) {
+  onDelete(id) {
     if (confirm('Are you sure ???')) {
-      this.rechercheService.deleteRecherche($key);
+      this.rechercheService.deleteRecherche(id);
       this.showDeleteMessage = true;
       setTimeout( () => this.showDeleteMessage = false, 5000);
     }
@@ -42,20 +44,20 @@ export class RechercheListComponent implements OnInit, OnDestroy {
 
   onEvent(recherche) {
     // this.event.populateForm(recherche);
-    this.router.navigate(['/recherche', 'events', recherche.$key]);
+    this.router.navigate(['/recherche', 'events', recherche.id]);
   }
 
   onEdit(recherche) {
     this.rechercheService.populateForm(recherche);
-    this.router.navigate(['/recherches', 'edit', recherche.$key]);
+    this.router.navigate(['/recherches', 'edit', recherche.id]);
   }
 
   onAudit(recherche) {
-    this.router.navigate(['/recherches', 'audit', recherche.$key]);
+    this.router.navigate(['/recherches', 'audit', recherche.id]);
   }
 
   ngOnDestroy(): void {
     this.recherchesSubscription.unsubscribe();
   }
-  
+
 }

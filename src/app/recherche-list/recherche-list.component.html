@@ -28,8 +28,8 @@
       <td> {{ recherche.statut }} </td>
       <td><a class="btn btn-success btn-sm" (click)="onEvent(recherche)">Event</a></td>
 			<td><a class="btn btn-info btn-sm" (click)="onAudit(recherche)">Audit</a></td>
-			<td><a class="btn btn-warning btn-sm" (click)="onEdit(recherche)">Edit</a></td>  
-			<td><a class="btn btn-danger btn-sm" (click)="onDelete(recherche.$key)">Delete</a></td>
+			<td><a class="btn btn-warning btn-sm" (click)="onEdit(recherche)">Edit</a></td>
+			<td><a class="btn btn-danger btn-sm" (click)="onDelete(recherche.id)">Delete</a></td>
 		</tr>
 	</tbody>
 </table>

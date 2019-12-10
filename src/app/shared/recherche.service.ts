@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
+import {Validators, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
@@ -7,7 +7,9 @@ import { throwError } from 'rxjs/internal/observable/throwError';
 import 'rxjs/add/operator/catch';
 import { environment } from 'src/environments/environment.prod';
 import { RechercheAudit } from '../model/recherche-audit.model';
+import { Recherche } from '../model/recherche';
 import {UserService} from "./user.service";
+import {UtilService} from "./util.service";
 
 
 @Injectable({
@@ -20,15 +22,10 @@ export class RechercheService {
               private authService: UserService,
               private httpClient: HttpClient) { }
 
-  recherches: any[] = [];
-  recherchesSubject = new Subject<any[]>();
+  recherches: Recherche[] = [];
+  recherchesSubject = new Subject<Recherche[]>();
 
   baseUrl = environment.appUrl + '/SuiviRecherches/rest/';
-
-  allStatutsRecherche: any[] = [];
-  allAssignationORP: any[] = [ ];
-  allTauxActivite: any[] = [];
-  allApprocheMedia: any[] = [];
 
   form = this.formBuider.group(this.initForm());
 
@@ -46,20 +43,9 @@ export class RechercheService {
     this.recherchesSubject.next(this.recherches);
   }
 
-  // getAllRecherches() {
-  //   console.log('--- getAllRecherches ' + this.baseUrl);
-  //   if (this.recherches.length !== 0) {
-  //     console.log(this.recherches);
-  //     return this.recherches;
-  //   }
-  //   return this.httpClient.get(this.baseUrl + 'recherches').subscribe((res: any[]) => {
-  //         console.log('getAllRecherche....' + this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS'));
-  //         console.log(res);
-  //         this.recherches = res.map(this.fromBoot);
-  //         this.emitRecherches();
-  //       },
-  //       error => console.error(error));
-  // }
+  logout(){
+    this.recherches = [];
+  }
 
   getAllRecherches() {
     console.log('--- getAllRecherches ' + this.baseUrl);
@@ -67,78 +53,78 @@ export class RechercheService {
       console.log(this.recherches);
       return this.recherches;
     }
-    return this.httpClient.get(this.baseUrl + 'recherches/' + this.authService.user.email).subscribe((res: any[]) => {
+    return this.httpClient.get<Recherche[]>(this.baseUrl + 'recherches/' + this.authService.user.email).subscribe((res: any[]) => {
         console.log('getAllRecherche....' + this.datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS'));
         console.log(res);
-        this.recherches = res.map(this.fromBoot);
+
+        this.recherches = res;
         this.emitRecherches();
       },
-      error => console.error(error));
+      error => UtilService.handleError(error));
   }
 
   insertRecherche(recherche) {
-    this.httpClient.post<any[]>(this.baseUrl + 'recherche', this.toBoot(recherche), {
+    this.httpClient.post<Recherche>(this.baseUrl + 'recherche', this.toBoot(recherche), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     }).subscribe(
-      (res: any[]) => {
+      (res) => {
         console.log('insert recherche');
         console.log(res);
-        this.recherches.push(this.fromBoot(res));
+        this.recherches.push(res);
         this.emitRecherches();
       },
-      error => RechercheService.handleError(error));
+      error => UtilService.handleError(error));
   }
 
   updateRecherche(recherche) {
-    this.httpClient.put<any[]>(this.baseUrl + 'recherche', this.toBoot(recherche), {
+    this.httpClient.put<Recherche>(this.baseUrl + 'recherche', this.toBoot(recherche), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     }).subscribe(
-      (res: any[]) => {
+      (res) => {
         const rech = this.fromBoot(res);
-        const rechercheIndexToRemove = this.getRechercheIndexToRemove(rech.$key);
+        const rechercheIndexToRemove = this.getRechercheIndexToRemove(rech.id);
         this.recherches.splice(rechercheIndexToRemove, 1);
         this.recherches.push(rech);
         this.emitRecherches();
       },
-      error => RechercheService.handleError(error));
+      error => UtilService.handleError(error));
   }
 
-  deleteRecherche($key) {
-    console.log('tryin to delete this recherche ' + $key);
+  deleteRecherche(id) {
+    console.log('tryin to delete this recherche ' + id);
 
-    this.httpClient.delete<any[]>(this.baseUrl + 'delRecherche/' + $key).subscribe(
+    this.httpClient.delete<Recherche>(this.baseUrl + 'delRecherche/' + id).subscribe(
       () => {
-        console.log('Recherche with id' + $key + 'deleted !!');
-        const rechercheIndexToRemove = this.getRechercheIndexToRemove($key);
+        console.log('Recherche with id' + id + 'deleted !!');
+        const rechercheIndexToRemove = this.getRechercheIndexToRemove(id);
         this.recherches.splice(rechercheIndexToRemove, 1);
         this.emitRecherches();
       },
-      (error) => RechercheService.handleError(error));
+      (error) => UtilService.handleError(error));
   }
 
-  getAuditRecherche($key) {
-    return this.httpClient.get<RechercheAudit[]>(this.baseUrl + 'audit/recherche/' + $key);
+  getAuditRecherche(id) {
+    return this.httpClient.get<RechercheAudit[]>(this.baseUrl + 'audit/recherche/' + id);
   }
 
-  getAuditPersonne($key) {
-    return this.httpClient.get(this.baseUrl + 'audit/personne/' + $key);
+  getAuditPersonne(id) {
+    return this.httpClient.get(this.baseUrl + 'audit/personne/' + id);
   }
 
-  getAuditEntreprise($key) {
-    return this.httpClient.get(this.baseUrl + 'audit/entreprise/' + $key);
+  getAuditEntreprise(id) {
+    return this.httpClient.get(this.baseUrl + 'audit/entreprise/' + id);
   }
 
-  getRechercheIndexToRemove($key) {
+  getRechercheIndexToRemove(id) {
     return this.recherches.findIndex(
             (rechercheEl) => {
-              if (rechercheEl.$key === $key) {
+              if (rechercheEl.id === id) {
                     return true;
               }});
-
   }
 
   populateForm(recherche) {
@@ -150,71 +136,13 @@ export class RechercheService {
     this.form = this.formBuider.group(this.initForm());
   }
 
-  keyIdIsNull() {
-    return this.form.get('$key').value === null;
+  formKeyIdIsNull() {
+    return this.form.get('id').value === null;
   }
 
-  private static handleError(errorResponse: HttpErrorResponse) {
-    if (errorResponse.error instanceof ErrorEvent) {
-      console.error('Client Side error : ' + errorResponse.error.message);
-    } else {
-      console.error('Server Side error : ' + errorResponse);
-    }
-    return throwError('There is a problem with the sevice ');
-  }
-
-  initStaticLists() {
-    this.getAllApprocheMedia();
-    this.getAllAssignationOrp();
-    this.getAllStatutsRecherche();
-    this.getAllTauxActivite();
-  }
-  getAllStatutsRecherche() {
-    if (this.allStatutsRecherche.length < 1) {
-     this.httpClient.get(this.baseUrl + 'rechercheStatut').subscribe((res: any[]) => {
-        console.log(res);
-        this.allStatutsRecherche = res;
-        },
-        error => RechercheService.handleError(error));
-    }
-    return this.allStatutsRecherche;
-  }
-
-  getAllAssignationOrp() {
-    if (this.allAssignationORP.length < 1) {
-      this.httpClient.get(this.baseUrl + 'assignationOrp').subscribe((res: any[]) => {
-        console.log(res);
-        this.allAssignationORP = res;
-        },
-        error => RechercheService.handleError(error));
-    }
-    return this.allAssignationORP;
-  }
-
-  getAllTauxActivite() {
-    if (this.allTauxActivite.length < 1) {
-      this.httpClient.get(this.baseUrl + 'tauxActivite').subscribe((res: any[]) => {
-        console.log(res);
-        this.allTauxActivite = res;
-        },
-        error => RechercheService.handleError(error));
-    }
-    return this.allTauxActivite;
-  }
-
-  getAllApprocheMedia() {
-    if (this.allApprocheMedia.length < 1) {
-      this.httpClient.get(this.baseUrl + 'approcheMedia').subscribe((res: any[]) => {
-          console.log(res);
-          this.allApprocheMedia = res;
-        },
-        error => RechercheService.handleError(error));
-    }
-    return this.allApprocheMedia;
-  }
   initForm() {
     return {
-      $key: [null],
+      id: [null],
       dateContact: [this.datepipe.transform(new Date(), 'yyyy-MM-dd'), Validators.required],
       poste: ['', Validators.required],
       statut: ['En Cours', Validators.required],
@@ -235,34 +163,14 @@ export class RechercheService {
       contactNomF: [''],
       contactPrenomF: [''],
       contactEmailF: ['', Validators.email],
-      contactTelephoneF: ['', Validators.minLength(8)]
+      contactTelephoneF: ['', Validators.minLength(8)],
+      userEmail: ['']
     };
   }
 
-  toFirebase(recherche) {
+  toBoot(recherche): Recherche {
     return {
-        dateContact: this.datepipe.transform(new Date(recherche.dateContact), 'yyyy-MM-dd'),
-        poste: recherche.poste,
-        statut: recherche.statut,
-
-        assignationORP: recherche.assignationORP,
-        tauxActivite: recherche.tauxActivite,
-        approcheMedia: recherche.approcheMedia,
-
-        client: recherche.client,
-        entreprise: recherche.entreprise,
-
-        contactNom: recherche.contactNom,
-        contactPrenom: recherche.contactPrenom,
-
-        contactEmail: recherche.contactEmail,
-        contactTelephone: recherche.contactTelephone
-    };
-  }
-
-  toBoot(recherche) {
-    return {
-        id: recherche.$key,
+        id: recherche.id,
         dateContact: this.datepipe.transform(new Date(recherche.dateContact), 'yyyy-MM-dd'),
         poste: recherche.poste,
         statut: recherche.statut,
@@ -284,14 +192,13 @@ export class RechercheService {
         contactPrenomF: recherche.contactPrenomF,
         contactEmailF: recherche.contactEmailF,
         contactTelephoneF: recherche.contactTelephoneF,
-
-
+        userEmail: this.authService.user.email
     };
   }
 
-    fromBoot(recherche) {
+    fromBoot(recherche): Recherche {
       return {
-        $key: recherche.id,
+        id: recherche.id,
         dateContact: recherche.dateContact,
         poste: recherche.poste,
         statut: recherche.statut,
@@ -313,6 +220,28 @@ export class RechercheService {
         contactPrenomF: recherche.contactPrenomF,
         contactEmailF: recherche.contactEmailF,
         contactTelephoneF: recherche.contactTelephoneF,
+        userEmail: this.authService.user.email
+    };
+  }
+
+  toFirebase(recherche) {
+    return {
+      dateContact: this.datepipe.transform(new Date(recherche.dateContact), 'yyyy-MM-dd'),
+      poste: recherche.poste,
+      statut: recherche.statut,
+
+      assignationORP: recherche.assignationORP,
+      tauxActivite: recherche.tauxActivite,
+      approcheMedia: recherche.approcheMedia,
+
+      client: recherche.client,
+      entreprise: recherche.entreprise,
+
+      contactNom: recherche.contactNom,
+      contactPrenom: recherche.contactPrenom,
+
+      contactEmail: recherche.contactEmail,
+      contactTelephone: recherche.contactTelephone
     };
   }
 }

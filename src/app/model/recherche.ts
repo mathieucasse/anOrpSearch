@@ -4,8 +4,8 @@ export interface Recherche {
     poste: string;
     statut: string;
     assignationORP: string;
-    tauxactivite: string;
-    approchemedia: string;
+    tauxActivite: string;
+    approcheMedia: string;
 
     entrepriseS: string;
     entrepriseTelS: string;
@@ -21,7 +21,7 @@ export interface Recherche {
     contactEmailF: string;
     contactTelephoneF: string;
 
-    userEmail: string;
+    userEmail?: string;
 
     //Evenement[];
 

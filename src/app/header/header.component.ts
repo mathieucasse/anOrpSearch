@@ -3,6 +3,7 @@ import { UserService } from '../shared/user.service';
 import {AuthService} from "../shared/auth.service";
 import {Subscription} from "rxjs";
 import {User} from "../model/user";
+import {RechercheService} from "../shared/recherche.service";
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,8 @@ export class HeaderComponent implements OnInit {
   authUserSubscription: Subscription;
 
 	constructor(private userService: UserService,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private rechercheService: RechercheService) { }
 
 	ngOnInit() {
     this.authUserSubscription = this.authService.currentUser.subscribe(authUser => {
@@ -27,6 +29,7 @@ export class HeaderComponent implements OnInit {
 	onSignOut() {
 		this.userService.logout();
     this.authService.logout();
+    this.rechercheService.logout();
 	}
 
 	isAdmin(){

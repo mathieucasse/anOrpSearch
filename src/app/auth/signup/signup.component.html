@@ -8,14 +8,22 @@
 			</div>
 			<div class="form-group">
 				<label for="passwd">Password</label>
-				<input type="text" id="passwd" formControlName="passwd" class="form-control" >
+				<input type="password" id="passwd" formControlName="passwd" class="form-control" >
 			</div>
-			
+      <div class="form-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="role">Role</span>
+        </div>
+        <select formControlName="roles" id="role" class="custom-select" multiple>
+          <option [value]="role" *ngFor="let role of allRoles">{{role}}</option>
+        </select>
+      </div>
+
 			<button type="submit" class="btn btn-primary" [disabled]="signUpForm.invalid">Créer mon compte</button>
 
 		</form>
 
 		<p class="text-danger">{{ errorMessage }}</p>
-		
+
 	</div>
 </div>

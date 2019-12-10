@@ -14,9 +14,6 @@ export class AuthService {
 
   static AUTH_TOKEN_URL = environment.appUrl + '/SuiviRecherches/oauth/token';
 
-  // constructor(private httpClient: HttpClient) {
-  // }
-
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
@@ -52,6 +49,7 @@ export class AuthService {
                                 id: null,
                                 email : email,
                                 password: password,
+                                role: [],
                                 token: JSON.stringify(res)
                               };
                               this.currentUserSubject.next(user);

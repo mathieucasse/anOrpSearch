@@ -1,27 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { RechercheService } from '../shared/recherche.service';
 import { Router } from '@angular/router';
+import {StaticlistsService} from "../shared/staticlists.service";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-recherche',
   templateUrl: './recherche.component.html',
   styleUrls: ['./recherche.component.css']
 })
-export class RechercheComponent  {
+export class RechercheComponent implements OnInit, OnDestroy {
 
   submitted: boolean;
   showSuccessMessage: boolean;
-  rechercheForm = this.rechercheService.form;
-  formControls = this.rechercheForm.controls;
-  allStatutsRecherche = this.rechercheService.allStatutsRecherche;
-  allAssignationORP = this.rechercheService.allAssignationORP;
-  allTauxActivite = this.rechercheService.allTauxActivite;
-  allApprocheMedia = this.rechercheService.allApprocheMedia;
 
+  rechercheForm: FormGroup;
+  formControls:  any;
+  allStatutsRecherche: any[];
+  allAssignationORP: any[];
+  allTauxActivite: any[];
+  allApprocheMedia: any[];
 
   constructor(private rechercheService: RechercheService,
+              private staticListService: StaticlistsService,
               private router: Router) { }
 
+  ngOnInit(): void {
+    this.rechercheForm = this.rechercheService.form;
+    this.formControls = this.rechercheForm.controls;
+    this.allStatutsRecherche = this.staticListService.allStatutsRecherche;
+    this.allAssignationORP = this.staticListService.allAssignationORP;
+    this.allTauxActivite = this.staticListService.allTauxActivite;
+    this.allApprocheMedia = this.staticListService.allApprocheMedia;
+  }
+
+  ngOnDestroy(): void {
+  }
 
   onBack() {
     this.rechercheService.resetForm();
@@ -33,14 +47,14 @@ export class RechercheComponent  {
   }
 
   keyIdIsNull() {
-    return this.rechercheService.keyIdIsNull();
+    return this.rechercheService.formKeyIdIsNull();
   }
 
   onSubmit() {
     this.submitted = true;
     // this.logSubmit();
     if (this.rechercheService.form.valid) {
-      if (this.rechercheService.form.get('$key').value == null) {
+      if (this.rechercheService.form.get('id').value == null) {
         this.rechercheService.insertRecherche(this.rechercheService.form.value);
       } else {
         this.rechercheService.updateRecherche(this.rechercheService.form.value);

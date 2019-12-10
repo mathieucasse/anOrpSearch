@@ -3,7 +3,7 @@
     <h2 [hidden]="keyIdIsNull()" >Update Recherche</h2>
     <h2 [hidden]="!keyIdIsNull()" >Creer une Recherche</h2>
 	<form class="form-group" [formGroup]="rechercheForm" (ngSubmit)="onSubmit()">
-        <input type="hidden" formControlName="$key">
+        <input type="hidden" formControlName="id">
 		<div class="form-row">
 			<div class="form-group col-md-3">
                 <div class="input-group">
@@ -23,17 +23,17 @@
                 </div>
 			</div>
 			<div class="form-group col-md-3">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="statut">Statut</span>
-                    </div>
-                    <select class="form-control" id="statut" formControlName="statut" >
-	   				    <option [value]="statut" *ngFor="let statut of allStatutsRecherche">{{statut}}</option>
-	    		    </select>
-                </div>
-            </div>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="statut">Statut</span>
+          </div>
+          <select class="form-control" id="statut" formControlName="statut" >
+            <option [value]="statut" *ngFor="let statut of allStatutsRecherche">{{statut}}</option>
+          </select>
         </div>
-        <div class="form-row">
+      </div>
+    </div>
+    <div class="form-row">
 			<div class="form-group col-md-4">
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -67,7 +67,7 @@
         </div>
 
 
-        <h3>Entreprise de Conatct</h3>
+        <h3>Entreprise de Contact</h3>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <div class="input-group">

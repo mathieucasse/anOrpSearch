@@ -3,32 +3,41 @@ import * as firebase from 'firebase';
 import {User} from "../model/user";
 
 import {JwtHelper} from "angular2-jwt";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {UtilService} from "./util.service";
+import {environment} from "../../environments/environment.prod";
 
 
 @Injectable()
 export class UserService {
 
+  baseUrl = environment.appUrl + '/SuiviRecherches/rest/';
+
   user = new User();
   jwtHelper = new JwtHelper();
   isAdmin: boolean;
+  roles: [];
 
   // email: string;
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
-  createNewUser(email: string, passwd: string) {
-    return new Promise(
-      (resolve, reject) => {
-        firebase.auth().createUserWithEmailAndPassword(email, passwd).then(
-          () => {
-            this.user.email = email;
-            resolve(); },
-          (error) => {
-            console.log('-------- AuthService.createNewUser() error' + error);
-            reject(error);
-          }
-        );
-      }
-    );
+  createNewUser(email: string, password: string, role: []) {
+    this.user.email = email;
+    this.user.password = password;
+    this.user.role = role;
+    console.log(JSON.stringify(this.user));
+    this.httpClient.post<User>(this.baseUrl + 'user', this.user, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }).subscribe(
+      (res) => {
+        console.log('crated user');
+        this.user = res;
+        console.log(res);
+
+      },
+      error => UtilService.handleError(error));
   }
 
   login(user: User) {
@@ -40,6 +49,8 @@ export class UserService {
     console.log(JSON.stringify(decodedToken));
 
     this.user = user;
+    this.user.role = decodedToken.authorities;
+    console.log(this.user.role)
     this.isAdmin = decodedToken.authorities.some(el => el === 'ADMIN_USER');
   }
 
